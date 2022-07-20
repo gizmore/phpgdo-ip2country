@@ -5,7 +5,7 @@ use GDO\Core\GDO;
 use GDO\Core\GDT_UInt;
 use GDO\Country\GDO_Country;
 use GDO\Country\GDT_Country;
-use GDO\DB\GDT_Index;
+use GDO\Core\GDT_Index;
 /**
  * IPCountry GDO table
  * 
