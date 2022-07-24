@@ -19,7 +19,7 @@ final class GDO_IPCountry extends GDO
 	###########
 	### GDO ###
 	###########
-	public function gdoEngine() { return self::MYISAM; }
+	public function gdoEngine() : string { return self::MYISAM; }
 	public function gdoCached() : bool { return false; }
 	public function gdoColumns() : array
 	{

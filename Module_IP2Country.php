@@ -6,13 +6,13 @@ use GDO\Core\GDT_Checkbox;
 use GDO\Register\GDO_UserActivation;
 use GDO\UI\GDT_Link;
 use GDO\User\GDO_User;
+
 /**
  * IP2Country detection.
  * 
  * @author gizmore
- * @since 2.0
- * @version 5.0
- *
+ * @version 7.0.1
+ * @since 2.0.0
  */
 final class Module_IP2Country extends GDO_Module
 {
@@ -23,7 +23,13 @@ final class Module_IP2Country extends GDO_Module
 	##############
 	public function getClasses() : array { return ['GDO\IP2Country\GDO_IPCountry']; }
 	public function onLoadLanguage() : void { $this->loadLanguage('lang/ip2country'); }
-	public function href_administrate_module() { return href('IP2Country', 'InstallIP2C'); }
+	public function href_administrate_module() : ?string { return href('IP2Country', 'InstallIP2C'); }
+	public function getDependencies() : array
+	{
+		return [
+			'Country',
+		];
+	}
 	
 	##############
 	### Config ###
@@ -42,13 +48,18 @@ final class Module_IP2Country extends GDO_Module
 	#############
 	public function hookUserActivated(GDO_User $user, GDO_UserActivation $activation=null)
 	{
-		if ($this->cfgAutodetectSignup())
+		if (module_enabled('Country'))
 		{
-			$this->autodetectForUser($user);
+			if ($this->cfgAutodetectSignup())
+			{
+				$this->autodetectForUser($user);
+			}
 		}
 	}
 	private static function autodetectForUser(GDO_User $user)
 	{
+		
+		
 		if (!$user->getCountryISO())
 		{
 		    $user->saveVar('user_country', GDO_IPCountry::detectISO($user->getRegisterIP()));
