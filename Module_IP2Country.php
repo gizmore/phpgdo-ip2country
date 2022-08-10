@@ -23,7 +23,7 @@ final class Module_IP2Country extends GDO_Module
 	##############
 	public function getClasses() : array { return ['GDO\IP2Country\GDO_IPCountry']; }
 	public function onLoadLanguage() : void { $this->loadLanguage('lang/ip2country'); }
-	public function href_administrate_module() : ?string { return href('IP2Country', 'InstallIP2C'); }
+	public function hrefAdministration() : ?string { return href('IP2Country', 'InstallIP2C'); }
 	public function getDependencies() : array
 	{
 		return [
