@@ -41,7 +41,6 @@ final class Module_IP2Country extends GDO_Module
 			GDT_Link::make('detect_users')->href(href('IP2Country', 'DetectUsers')),
 		);
 	}
-	public function cfgAutodetectSignup() { return $this->getConfigValue('autodetect_signup'); }
 	
 	#############
 	### Hooks ###
@@ -58,8 +57,6 @@ final class Module_IP2Country extends GDO_Module
 	}
 	private static function autodetectForUser(GDO_User $user)
 	{
-		
-		
 		if (!$user->getCountryISO())
 		{
 		    $user->saveVar('user_country', GDO_IPCountry::detectISO($user->getRegisterIP()));
