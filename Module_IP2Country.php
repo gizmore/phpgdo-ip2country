@@ -42,6 +42,8 @@ final class Module_IP2Country extends GDO_Module
 		);
 	}
 	
+	public function cfgAutodetectSignup() : bool { return $this->getConfigValue('autodetect_signup'); }
+	
 	#############
 	### Hooks ###
 	#############
@@ -59,7 +61,8 @@ final class Module_IP2Country extends GDO_Module
 	{
 		if (!$user->getCountryISO())
 		{
-		    $user->saveVar('user_country', GDO_IPCountry::detectISO($user->getRegisterIP()));
+			$ip = $user->settingVar('Register', 'register_ip');
+		    $user->saveVar('user_country', GDO_IPCountry::detectISO($ip));
 		}
 	}
 }
