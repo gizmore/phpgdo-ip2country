@@ -15,14 +15,14 @@ final class InstallIP2C extends MethodForm
     
     public function getPermission() : ?string { return 'admin'; }
     
-    public function execute()
-    {
-        return $this->renderNavBar('IP2Country')->addField(parent::execute());
-    }
+//     public function execute()
+//     {
+//         return $this->renderNavBar('IP2Country')->addField(parent::execute());
+//     }
     
 	public function createForm(GDT_Form $form) : void
 	{
-	    $form->title(t('mt_ip2c_install'));
+	    $form->title('mt_ip2c_install');
 		$form->addField(GDT_AntiCSRF::make());
 		$form->actions()->addField(GDT_Submit::make());
 	}
@@ -38,7 +38,8 @@ final class InstallIP2C extends MethodForm
 		$fields = GDO_IPCountry::table()->getGDOColumns(['ipc_lo', 'ipc_hi', 'ip_country']);
 		while ($row = fgetcsv($fh))
 		{
-			list($lo, $hi, $registrar, $timestamp, $iso2, $iso3, $country) = $row;
+// 			list($lo, $hi, $registrar, $timestamp, $iso2, $iso3, $country) = $row;
+			list($lo, $hi, , , $iso2, , ) = $row;
 			if (!in_array($iso2, $noCountry, true))
 			{
 			    $bulkData[] = [$lo, $hi, strtolower($iso2)];
@@ -55,4 +56,5 @@ final class InstallIP2C extends MethodForm
 		
 		return $this->message('msg_ip2country_installed', [$rows]);
 	}
+	
 }

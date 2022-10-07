@@ -6,12 +6,13 @@ use GDO\Core\GDT_UInt;
 use GDO\Country\GDO_Country;
 use GDO\Country\GDT_Country;
 use GDO\Core\GDT_Index;
+
 /**
- * IPCountry GDO table
+ * IP2Country GDO table.
  * 
  * @author gizmore
- * @since 3.0
  * @version 6.05
+ * @since 3.0
  * @see GDO_Country
  */
 final class GDO_IPCountry extends GDO
@@ -19,16 +20,16 @@ final class GDO_IPCountry extends GDO
 	###########
 	### GDO ###
 	###########
-	public function gdoEngine() : string { return self::MYISAM; }
-	public function gdoCached() : bool { return false; }
-	public function gdoColumns() : array
+	public function gdoEngine(): string { return self::MYISAM; }
+	public function gdoCached(): bool { return false; }
+	public function gdoColumns(): array
 	{
-		return array(
+		return [
 			GDT_UInt::make('ipc_lo')->notNull(),
 		    GDT_UInt::make('ipc_hi')->notNull(),
 		    GDT_Country::make('ip_country')->notNull(),
 		    GDT_Index::make()->indexColumns('ipc_lo', 'ipc_hi'),
-		);
+		];
 	}
 	
 	###########

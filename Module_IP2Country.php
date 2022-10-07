@@ -5,9 +5,9 @@ use GDO\Core\GDO_Module;
 use GDO\Core\GDT_Checkbox;
 use GDO\Register\GDO_UserActivation;
 use GDO\UI\GDT_Link;
-use GDO\UI\GDT_Panel;
 use GDO\User\GDO_User;
 use GDO\UI\GDT_Divider;
+use GDO\IP2Country\Method\DetectUsers;
 
 /**
  * IP2Country detection.
@@ -30,6 +30,14 @@ final class Module_IP2Country extends GDO_Module
 	{
 		return [
 			'Country',
+		];
+	}
+	
+	public function getFriendencies() : array
+	{
+		return [
+			'DoubleAccounts',
+			'Register',
 		];
 	}
 	
@@ -67,12 +75,13 @@ final class Module_IP2Country extends GDO_Module
 			}
 		}
 	}
+	
 	private static function autodetectForUser(GDO_User $user)
 	{
 		if (!$user->getCountryISO())
 		{
-			$ip = $user->settingVar('Register', 'register_ip');
-		    $user->saveVar('user_country', GDO_IPCountry::detectISO($ip));
+			DetectUsers::detectUser($user);
 		}
 	}
+	
 }
