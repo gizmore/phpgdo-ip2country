@@ -5,7 +5,9 @@ use GDO\Core\GDO_Module;
 use GDO\Core\GDT_Checkbox;
 use GDO\Register\GDO_UserActivation;
 use GDO\UI\GDT_Link;
+use GDO\UI\GDT_Panel;
 use GDO\User\GDO_User;
+use GDO\UI\GDT_Divider;
 
 /**
  * IP2Country detection.
@@ -43,6 +45,14 @@ final class Module_IP2Country extends GDO_Module
 	}
 	
 	public function cfgAutodetectSignup() : bool { return $this->getConfigValue('autodetect_signup'); }
+	
+	public function getPrivacyRelatedFields(): array
+	{
+		return [
+			GDT_Divider::make()->label('info_privacy_related_module', [$this->gdoHumanName()]),
+			$this->getConfigColumn('autodetect_signup'),
+		];
+	}
 	
 	#############
 	### Hooks ###
