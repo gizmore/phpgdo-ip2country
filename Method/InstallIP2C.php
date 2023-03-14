@@ -12,8 +12,13 @@ use GDO\Admin\MethodAdmin;
 final class InstallIP2C extends MethodForm
 {
     use MethodAdmin;
-    
-    public function getPermission() : ?string { return 'admin'; }
+
+	public function isTrivial(): bool
+	{
+		return false;
+	}
+
+	public function getPermission() : ?string { return 'admin'; }
     
 //     public function execute()
 //     {
