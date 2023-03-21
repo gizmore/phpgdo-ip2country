@@ -3,57 +3,59 @@ namespace GDO\IP2Country;
 
 use GDO\Core\GDO_Module;
 use GDO\Core\GDT_Checkbox;
+use GDO\IP2Country\Method\DetectUsers;
 use GDO\Register\GDO_UserActivation;
+use GDO\UI\GDT_Divider;
 use GDO\UI\GDT_Link;
 use GDO\User\GDO_User;
-use GDO\UI\GDT_Divider;
-use GDO\IP2Country\Method\DetectUsers;
 
 /**
  * IP2Country detection.
- * 
- * @author gizmore
+ *
  * @version 7.0.1
  * @since 2.0.0
+ * @author gizmore
  */
 final class Module_IP2Country extends GDO_Module
 {
+
 	public int $priority = 80; # Install and load late :)
-	
+
 	##############
 	### Module ###
 	##############
-	public function getClasses() : array { return ['GDO\IP2Country\GDO_IPCountry']; }
-	public function onLoadLanguage() : void { $this->loadLanguage('lang/ip2country'); }
-	public function href_administrate_module() : ?string { return href('IP2Country', 'InstallIP2C'); }
-	public function getDependencies() : array
+	public function getClasses(): array { return ['GDO\IP2Country\GDO_IPCountry']; }
+
+	public function onLoadLanguage(): void { $this->loadLanguage('lang/ip2country'); }
+
+	public function href_administrate_module(): ?string { return href('IP2Country', 'InstallIP2C'); }
+
+	public function getDependencies(): array
 	{
 		return [
 			'Country',
 		];
 	}
-	
-	public function getFriendencies() : array
+
+	public function getFriendencies(): array
 	{
 		return [
 			'DoubleAccounts',
 			'Register',
 		];
 	}
-	
+
 	##############
 	### Config ###
 	##############
-	public function getConfig() : array
+	public function getConfig(): array
 	{
-		return array(
+		return [
 			GDT_Checkbox::make('autodetect_signup')->initial('1'),
 			GDT_Link::make('detect_users')->href(href('IP2Country', 'DetectUsers')),
-		);
+		];
 	}
-	
-	public function cfgAutodetectSignup() : bool { return $this->getConfigValue('autodetect_signup'); }
-	
+
 	public function getPrivacyRelatedFields(): array
 	{
 		return [
@@ -61,11 +63,8 @@ final class Module_IP2Country extends GDO_Module
 			$this->getConfigColumn('autodetect_signup'),
 		];
 	}
-	
-	#############
-	### Hooks ###
-	#############
-	public function hookUserActivated(GDO_User $user, GDO_UserActivation $activation=null)
+
+	public function hookUserActivated(GDO_User $user, GDO_UserActivation $activation = null)
 	{
 		if (module_enabled('Country'))
 		{
@@ -75,7 +74,13 @@ final class Module_IP2Country extends GDO_Module
 			}
 		}
 	}
-	
+
+	#############
+	### Hooks ###
+	#############
+
+	public function cfgAutodetectSignup(): bool { return $this->getConfigValue('autodetect_signup'); }
+
 	private static function autodetectForUser(GDO_User $user)
 	{
 		if (!$user->getCountryISO())
@@ -83,5 +88,5 @@ final class Module_IP2Country extends GDO_Module
 			DetectUsers::detectUser($user);
 		}
 	}
-	
+
 }

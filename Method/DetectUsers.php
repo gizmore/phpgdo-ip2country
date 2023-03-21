@@ -11,13 +11,14 @@ use GDO\User\GDO_UserSetting;
 
 /**
  * Detect the country for a user from friend modules.
- * 
- * @author gizmore
+ *
  * @version 7.0.1
+ * @author gizmore
  */
 final class DetectUsers extends MethodForm
 {
-	public function createForm(GDT_Form $form) : void
+
+	public function createForm(GDT_Form $form): void
 	{
 		$form->addField(GDT_AntiCSRF::make());
 		$form->actions()->addField(GDT_Submit::make());
@@ -37,14 +38,14 @@ final class DetectUsers extends MethodForm
 		while ($user = $result->fetchInto($user))
 		{
 			$rows++;
-			$s = (int) $this->detectUser($user);
+			$s = (int)$this->detectUser($user);
 			$succ += $s;
 			$fail += 1 - $s;
 		}
 		return $this->message('msg_ip2country_detection', [
 			$rows, $succ, $fail]);
 	}
-	
+
 	###########
 	### API ###
 	###########
@@ -60,13 +61,13 @@ final class DetectUsers extends MethodForm
 		}
 		return false;
 	}
-	
+
 	private static function getIP(GDO_User $user): ?string
 	{
 		# @TODO use DoubleAccount in IP2Country.
 		if (module_enabled('DoubleAccounts'))
 		{
-			
+
 		}
 		if (module_enabled('Register'))
 		{
@@ -74,5 +75,5 @@ final class DetectUsers extends MethodForm
 		}
 		return null;
 	}
-	
+
 }
