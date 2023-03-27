@@ -2,6 +2,7 @@
 namespace GDO\IP2Country\Method;
 
 use GDO\Admin\MethodAdmin;
+use GDO\Core\GDT;
 use GDO\Form\GDT_AntiCSRF;
 use GDO\Form\GDT_Form;
 use GDO\Form\GDT_Submit;
@@ -31,7 +32,7 @@ final class InstallIP2C extends MethodForm
 //         return $this->renderNavBar('IP2Country')->addField(parent::execute());
 //     }
 
-	public function formValidated(GDT_Form $form)
+	public function formValidated(GDT_Form $form): GDT
 	{
 		GDO_IPCountry::table()->truncate();
 		$module = Module_IP2Country::instance();
