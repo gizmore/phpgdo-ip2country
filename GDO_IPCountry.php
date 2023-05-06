@@ -46,7 +46,7 @@ final class GDO_IPCountry extends GDO
 	{
 		if ($ip = ip2long($ip))
 		{
-			return self::table()->select('ip_country')->where("ipc_lo <= $ip AND ipc_hi >= $ip")->limit(1)->exec()->fetchValue();
+			return self::table()->select('ip_country')->where("ipc_lo <= $ip AND ipc_hi >= $ip")->limit(1)->exec()->fetchVar();
 		}
 	}
 
