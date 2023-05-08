@@ -20,7 +20,7 @@ final class InstallIP2C extends MethodForm
 		return false;
 	}
 
-	public function createForm(GDT_Form $form): void
+	protected function createForm(GDT_Form $form): void
 	{
 		$form->title('mt_ip2c_install');
 		$form->addField(GDT_AntiCSRF::make());

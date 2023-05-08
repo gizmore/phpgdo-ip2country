@@ -19,7 +19,7 @@ use GDO\User\GDO_UserSetting;
 final class DetectUsers extends MethodForm
 {
 
-	public function createForm(GDT_Form $form): void
+	protected function createForm(GDT_Form $form): void
 	{
 		$form->addField(GDT_AntiCSRF::make());
 		$form->actions()->addField(GDT_Submit::make());
